@@ -17,7 +17,7 @@ html, body {font-family: 'NanumBarunGothic', sans-serif;}
 
 .header-wrapper .navi-wrap {margin-left: auto; display: flex; align-items: center; font-family: 'NanumBarunGothic', sans-serif;}
 .header-wrapper .navi-wrap .navi {padding: 1.5em; cursor: pointer;}
-.header-wrapper .navi-wrap .navi:hover {background-color: coral;}
+.header-wrapper .navi-wrap .navi:hover {background-color: crimson;}
 .header-wrapper .navi-wrap .navi.bt-logout {display: none;}
 
 .header-wrapper .navi-wrap .info-wrap {display: flex; align-items: center; display: none;}
