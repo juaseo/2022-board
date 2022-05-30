@@ -4,6 +4,7 @@ var googleAuth = new firebase.auth.GoogleAuthProvider(); //구글로그인 모�
 var db = firebase.database(); //firebase의 database모듈을 불러온다.
 var user = null;
 
+
 var $tbody = $('.list-wrapper tbody');
 
 /*************** 사용자 함수 *****************/
@@ -13,10 +14,11 @@ $tbody.empty();
 /*************** 이벤트 등록 *****************/
 auth.onAuthStateChanged(onChangeAuth);
 db.ref('root/board').on('child_added', onAdded);
-db.ref('root/board').on('child_removed', onRemoved);
+
 
 $('.bt-login').click(onLogin);
 $('.bt-logout').click(onLogOut);
+$(window).resize(onResize);
 
 /*************** 이벤트 콜백 *****************/
 function onAdded(r) {
@@ -24,14 +26,37 @@ function onAdded(r) {
 	var v = r.val();
 	var i = $tbody.find('tr').length + 1;
 	var html = '';
-	html += '<tr id="'+k+'">';
-	html += '<td>'+i+'</td>';
-	html += '<td class="text-left">'+v.content+'</td>';
+	html += '<tr id="'+k+'" data-uid="'+v.uid+'">';
+	html += '<td>'+i;
+	html += '</td>';
+	html += '<td class="text-left">'+v.content;
+	html += '<div class="btn-group mask">';
+	html += '<button class="bt-chg btn btn-sm btn-info"><i class="fa fa-edit"></i></button>';
+	html += '<button class="bt-rev btn btn-sm btn-info"><i class="fa fa-trash-alt"></i></button>';
+	html += '</div>';
+	html += '</td>';
 	html += '<td>'+v.writer+'</td>';
 	html += '<td>'+moment(v.createdAt).format('YYYY/MM/DD')+'</td>';
 	html += '<td>'+v.readnum+'</td>';
 	html += '</tr>';
-	$tbody.prepend(html);
+	$(html).prependTo($tbody).mouseenter(onTrEnter).mouseleave(onTrLeave);
+	$(window).tigger('resize');
+}
+
+function onTrEnter() {
+	var uid = $(this).data('uid');
+	if(user && uid === user.uid) {
+		$(this).find('.mask').css('display', 'inline-block');
+	}
+}
+
+function onTrLeave() {
+	$(this).find('.mask').css('display', 'none');
+}
+
+function onResize() {
+	var wid = $('.list-tb').innerWidth();
+	$('.list-tb .mask').innerWidth(wid);
 }
 
 function onSubmit(f) {
