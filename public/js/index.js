@@ -14,13 +14,22 @@ $tbody.empty();
 /*************** 이벤트 등록 *****************/
 auth.onAuthStateChanged(onChangeAuth);
 db.ref('root/board').on('child_added', onAdded);
+db.ref('root/board').on('child_removed', onRemoved);
+db.ref('root/board').on('child_changed', onChanged);
 
 
 $('.bt-login').click(onLogin);
 $('.bt-logout').click(onLogOut);
-$(window).resize(onResize);
 
 /*************** 이벤트 콜백 *****************/
+function onRemoved(r) {
+	$('#' + r.key).remove();
+}
+
+function onChanged(r) {
+	console.log(r);
+}
+
 function onAdded(r) {
 	var k = r.key;
 	var v = r.val();
@@ -42,16 +51,29 @@ function onAdded(r) {
 	var $tr = $(html).prependTo($tbody);
 	$tr.mouseenter(onTrEnter);
 	$tr.mouseleave(onTrLeave);
-	$tr.find('bt-chg').click(onChgClick);
-	$tr.find('bt-rev').click(onRevClick);
+	$tr.find('.bt-chg').click(onChgClick);
+	$tr.find('.bt-rev').click(onRevClick);
 }
 
 function onChgClick() {
-	console.log( $(this).parents('tr').attr('id') );
+	var key = $(this).parents('tr').attr('id');
+	$('.create-form').find('[name="key"]').val(key);
+	
 }
 
 function onRevClick() {
-
+	if(confirm('정말로 삭제하시겠습니까?')) {
+		var key =	$(this).parents('tr').attr('id');
+		db.ref('root/board/' + key).remove(); // 실제 firebase의 데이터 삭제
+		/*
+		삭제 로직
+		1. db.ref('root/board/' + key).remove(); 
+		2. db.ref('root/board/').on('child_removed', onREmoved); //실제 데이터가 삭제되면 이벤트가 실행
+		3. function onRemoved(r) { r: 삭제된 데이터
+			$('#' + r.key).remove(); //jQuery remove()
+		}
+		*/
+	}
 }
 
 function onTrEnter() {
