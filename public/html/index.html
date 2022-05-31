@@ -42,9 +42,12 @@
 		</section>
 		<section class="create-wrapper wrapper">
 			<form class="create-form form-inline" onsubmit="return onSubmit(this);">
+				<input type="hidden" name="key">
 				<input type="text" name="writer" class="form-control" placeholder="작성자">
 				<input type="text" name="content" class="form-control" placeholder="한 줄 내용" autofocus>
-				<button class="bt-create btn btn-danger">등록</button>
+				<button class="bt-create bt-create btn btn-danger">등록</button>
+				<button class="bt-update bt-create btn btn-success">수정</button>
+				<button class="bt-cancel bt-create btn btn-danger">취소</button>
 			</form>
 		</section>
 		<section class="list-wrapper wrapper">
