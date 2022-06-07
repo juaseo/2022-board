@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,6 +22,7 @@
 	<script src="../js/lodash.min.js"></script>
 	<script src="../js/moment.min.js"></script>
 </head>
+
 <body>
 	<div class="container-wrapper">
 		<header class="header-wrapper">
@@ -45,9 +47,11 @@
 				<input type="hidden" name="key">
 				<input type="text" name="writer" class="form-control" placeholder="작성자">
 				<input type="text" name="content" class="form-control" placeholder="한 줄 내용" autofocus>
-				<button class="bt-create bt-create btn btn-danger">등록</button>
-				<button class="bt-update bt-create btn btn-success">수정</button>
-				<button class="bt-cancel bt-create btn btn-danger">취소</button>
+				<button class="bt-create btn btn-danger">등록</button>
+				<div class="btn-group" style="display: none;">
+					<button class="bt-update btn btn-success">수정</button>
+					<button class="bt-cancel btn btn-danger" type="button">취소</button>
+				</div>
 			</form>
 		</section>
 		<section class="list-wrapper wrapper">
@@ -80,4 +84,5 @@
 	</div>
 	<script src="../js/index.js"></script>
 </body>
+
 </html>
